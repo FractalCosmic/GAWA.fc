@@ -1,0 +1,55 @@
+use sha2::{Sha256, Digest};
+
+struct Block {
+    index: u64,
+    timestamp: u64,
+    data: String,
+    previous_hash: String,
+    hash: String,
+}
+
+impl Block {
+    fn new(index: u64, timestamp: u64, data: String, previous_hash: String) -> Block {
+        let mut block = Block {
+            index,
+            timestamp,
+            data,
+            previous_hash,
+            hash: String::new(),
+        };
+        block.hash = block.calculate_hash();
+        block
+    }
+
+    fn calculate_hash(&self) -> String {
+        let mut hasher = Sha256::new();
+        hasher.update(self.index.to_string());
+        hasher.update(self.timestamp.to_string());
+        hasher.update(&self.data);
+        hasher.update(&self.previous_hash);
+        format!("{:x}", hasher.finalize())
+    }
+}
+
+struct Blockchain {
+    chain: Vec<Block>,
+}
+
+impl Blockchain {
+    fn new() -> Blockchain {
+        Blockchain {
+            chain: vec![Block::new(0, 0, String::from("Genesis Block"), String::from("0"))],
+        }
+    }
+
+    fn add_block(&mut self, data: String) {
+        let previous_block = self.chain.last().unwrap();
+        let new_block = Block::new(
+            previous_block.index + 1,
+            std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_secs(),
+            data,
+            previous_block.hash.clone(),
+        );
+        self.chain.push(new_block);
+    }
+}
