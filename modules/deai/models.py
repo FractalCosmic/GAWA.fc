@@ -1,4 +1,5 @@
 # models.py
+# 模型上传、版本控制和访问接口
 from django.db import models
 from django.contrib.auth.models import User
 
