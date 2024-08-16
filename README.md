@@ -9,8 +9,13 @@ Distributed DIgitalization Intelligence Model
  - Decentralized and modular system construction
  - Use of Proof of Value Contribution (SG) as an incentive mechanism
 
+## Key Roles
 
- ## Modules
+ - Creator
+ - Contributor
+ - Explorer
+
+## Modules
 
  - DeScience research think tank (research outputs and content)
  - DeAI algorithm model library
